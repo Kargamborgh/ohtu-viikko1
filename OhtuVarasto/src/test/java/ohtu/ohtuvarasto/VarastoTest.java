@@ -75,4 +75,71 @@ public class VarastoTest {
         varasto = new Varasto(-1,-1);
         varasto.toString();
     }
+    
+    @Test
+    public void eiLiikaaTavaraa() {
+        varasto.lisaaVarastoon(11);
+        
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiLiikaaOttoa() {
+        varasto.lisaaVarastoon(3);
+        
+        varasto.otaVarastosta(5);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void josSaldoIsompiKuinTilavuusSaldoksiLaitetaanTilavuus() {
+        double herp = varasto.getSaldo()+10;
+        varasto.lisaaVarastoon(herp);
+        
+        assertEquals(varasto.getSaldo(), varasto.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void josOtetaanLiikaa() {
+        varasto.lisaaVarastoon(10);
+        double herp = varasto.otaVarastosta(15);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(10, herp, vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiNegatiivistaLisaysta() {
+        varasto.lisaaVarastoon(-5);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void saldoOikeinKunOtetaanLiikaa() {
+        varasto.otaVarastosta(varasto.getSaldo()+2);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void lisataanVarastoonSopivasti() {
+        varasto.lisaaVarastoon(varasto.paljonkoMahtuu()-5);
+        
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void oikeaSaldoKunLisataanLiikaa() {
+        varasto.lisaaVarastoon(varasto.paljonkoMahtuu()+30);
+        
+        assertEquals(varasto.getTilavuus(), varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void otetaanNegatiivinenMaara() {
+        varasto.otaVarastosta(-1);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
 }
