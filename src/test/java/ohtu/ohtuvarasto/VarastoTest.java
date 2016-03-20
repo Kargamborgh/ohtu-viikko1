@@ -137,9 +137,9 @@ public class VarastoTest {
     }
     
     @Test
-    public void otetaanNegatiivinenMaara() { // RIKOTTU
+    public void otetaanNegatiivinenMaara() { // KORJATTU
         varasto.otaVarastosta(-1);
         
-        assertEquals(2, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
     }
 }
